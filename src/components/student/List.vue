@@ -8,10 +8,9 @@ const { getAllStudent, error, studentData } = useStudent();
 onMounted(getAllStudent);
 
 const deleteStudent = async (id) => {
-    if(!window.confirm("Are you sure?")){
+    if (!window.confirm("Are you sure?")) {
         return
     }
-    console.log('DELETE');
 }
 </script>
 

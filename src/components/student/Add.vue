@@ -1,13 +1,16 @@
 <script setup>
 import { reactive } from 'vue';
+import useStudent from '../../composeable/studentApi';
 
+const { studentData, error, createStudent } = useStudent();
 const formData = reactive({
     studentname: "",
     email: ""
 });
 
 const handleSubmit = async () => {
-    console.log('Form SUBMITTED:', formData);
+    console.log('HERER');
+    await createStudent(formData);
 }
 </script>
 

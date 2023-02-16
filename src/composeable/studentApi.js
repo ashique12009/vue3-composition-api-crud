@@ -34,10 +34,33 @@ export default function useStudent() {
         }
     }
 
+    // Add student
+    const createStudent = async(formData) => {
+        studentData.value = [];
+        error.value = null;
+
+        try {
+            const config = {
+                method: 'POST',
+                url: url,
+                headers: {
+                    'Content-Type': 'Application/json'
+                },
+                data: JSON.stringify(formData)
+            }
+            
+            const res = await axios(config);
+            studentData.value = res.data;
+        } catch (err) {
+            error.value = err;
+        }
+    }
+
     return {
         getAllStudent,
         error,
         studentData,
-        getSingleStudentData
+        getSingleStudentData,
+        createStudent
     }
 }
