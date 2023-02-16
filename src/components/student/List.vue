@@ -4,13 +4,15 @@ import { RouterLink } from 'vue-router';
 import useStudent from '@/composeable/studentApi';
 import { onMounted } from 'vue';
 
-const { getAllStudent, error, studentData } = useStudent();
+const { getAllStudent, error, studentData, deleteStudent } = useStudent();
 onMounted(getAllStudent);
 
-const deleteStudent = async (id) => {
+const delStudent = async (id) => {
     if (!window.confirm("Are you sure?")) {
         return
     }
+    await deleteStudent(id);
+    await getAllStudent();
 }
 </script>
 
@@ -47,7 +49,7 @@ const deleteStudent = async (id) => {
                             <PencilIcon class="text-emerald-500 h-6 w-6 inline mx-6" />
                         </RouterLink>
                         
-                        <TrashIcon class="text-red-500 h-6 w-6 inline cursor-pointer" @click="deleteStudent(1)" />
+                        <TrashIcon class="text-red-500 h-6 w-6 inline cursor-pointer" @click="delStudent(student.id)" />
                     </td>
                 </tr>
             </tbody>
