@@ -1,6 +1,11 @@
 <script setup>
 import { EyeIcon, PencilIcon, TrashIcon, UserPlusIcon } from '@heroicons/vue/24/solid';
 import { RouterLink } from 'vue-router';
+import useStudent from '@/composeable/studentApi';
+import { onMounted } from 'vue';
+
+const { getAllStudent, error, studentData } = useStudent();
+onMounted(getAllStudent);
 
 const deleteStudent = async (id) => {
     if(!window.confirm("Are you sure?")){
@@ -30,10 +35,10 @@ const deleteStudent = async (id) => {
                 </tr>
             </thead>
             <tbody class="text-center">
-                <tr>
-                    <td class="py-2">1</td>
-                    <td class="py-2">Ashique</td>
-                    <td class="py-2">aa@a.com</td>
+                <tr v-for="student in studentData">
+                    <td class="py-2">{{ student.id }}</td>
+                    <td class="py-2">{{ student.studentname }}</td>
+                    <td class="py-2">{{ student.email }}</td>
                     <td class="py-2">
                         <RouterLink :to="{name: 'view', params: {id: 1} }">
                             <EyeIcon class="text-blue-500 h-6 w-6 inline" />
