@@ -35,16 +35,16 @@ const deleteStudent = async (id) => {
                 </tr>
             </thead>
             <tbody class="text-center">
-                <tr v-for="student in studentData">
+                <tr v-for="student in studentData" :key="student.id">
                     <td class="py-2">{{ student.id }}</td>
                     <td class="py-2">{{ student.studentname }}</td>
                     <td class="py-2">{{ student.email }}</td>
                     <td class="py-2">
-                        <RouterLink :to="{name: 'view', params: {id: 1} }">
+                        <RouterLink :to="{name: 'view', params: {id: student.id} }">
                             <EyeIcon class="text-blue-500 h-6 w-6 inline" />
                         </RouterLink>
                         
-                        <RouterLink :to="{name: 'edit', params: {id: 1} }">
+                        <RouterLink :to="{name: 'edit', params: {id: student.id} }">
                             <PencilIcon class="text-emerald-500 h-6 w-6 inline mx-6" />
                         </RouterLink>
                         

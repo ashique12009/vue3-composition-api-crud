@@ -1,4 +1,14 @@
 <script setup>
+import { onMounted } from 'vue';
+import useStudent from '../../composeable/studentApi';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const { error, studentData, getSingleStudentData } = useStudent();
+onMounted(() => {
+    getSingleStudentData(route.params.id);
+});
+
 </script>
 
 <template>
@@ -18,9 +28,9 @@
             </thead>
             <tbody class="text-center">
                 <tr>
-                    <td class="py-2">1</td>
-                    <td class="py-2">Ashique</td>
-                    <td class="py-2">aa@a.com</td>
+                    <td class="py-2">{{ studentData.id }}</td>
+                    <td class="py-2">{{ studentData.studentname }}</td>
+                    <td class="py-2">{{ studentData.email }}</td>
                     <td class="py-2">
                         <RouterLink :to="{name: 'list'}">
                             <button class="bg-purple-700 text-white font-medium py-2 px-6 rounded-md hover:bg-purple-800 mr-6" type="button">Back to Home</button>

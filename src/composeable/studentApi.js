@@ -2,7 +2,7 @@ import axios from "axios";
 import { ref } from "vue";
 
 export default function useStudent() {
-    const url = "http://localhost:3333/students";
+    const url = "http://localhost:3333/students/";
     const studentData = ref([]);
     const error = ref(null);
 
@@ -21,9 +21,23 @@ export default function useStudent() {
         }
     }
 
+    // Get single studen data
+    const getSingleStudentData = async (id) => {
+        studentData.value = [];
+        error.value = null;
+
+        try {
+            const res = await axios(url + id);
+            studentData.value = res.data;
+        } catch (err) {
+            error.value = err;
+        }
+    }
+
     return {
         getAllStudent,
         error,
-        studentData
+        studentData,
+        getSingleStudentData
     }
 }
