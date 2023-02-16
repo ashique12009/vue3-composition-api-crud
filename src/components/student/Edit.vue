@@ -1,13 +1,18 @@
 <script setup>
 import { reactive } from 'vue';
+import useStudent from '../../composeable/studentApi';
+import { useRoute } from 'vue-router';
+import { onMounted } from 'vue';
 
-const formData = reactive({
-    studentname: "",
-    email: ""
+const { studentData, error, getSingleStudentData, updateStudent } = useStudent();
+const route = useRoute();
+
+onMounted(() => {
+    getSingleStudentData(route.params.id);
 });
 
 const handleSubmit = async () => {
-    console.log('Form UPDATED:', formData);
+    await updateStudent(route.params.id, studentData.value);
 }
 </script>
 
@@ -20,10 +25,18 @@ const handleSubmit = async () => {
         <form @submit.prevent="handleSubmit" class="w-fill" id="AddStudntForm">
             <div class="flex item-center m-6">
                 <div class="w-1/5">
+                    <label for="id" class="form-medium">ID: </label>
+                </div>
+                <div class="w-4/5">
+                    <input type="text" id="id" class="w-full border-2 border-gery py-2 px-4" v-model.trim="studentData.id" placeholder="Write your name" required readonly>
+                </div>
+            </div>
+            <div class="flex item-center m-6">
+                <div class="w-1/5">
                     <label for="studentname" class="form-medium">Name: </label>
                 </div>
                 <div class="w-4/5">
-                    <input type="text" id="studentname" class="w-full border-2 border-gery py-2 px-4" v-model.trim="formData.studentname" placeholder="Write your name" required>
+                    <input type="text" id="studentname" class="w-full border-2 border-gery py-2 px-4" v-model.trim="studentData.studentname" placeholder="Write your name" required>
                 </div>
             </div>
             <div class="flex item-center m-6">
@@ -31,7 +44,7 @@ const handleSubmit = async () => {
                     <label for="studentemail" class="form-medium">Email: </label>
                 </div>
                 <div class="w-4/5">
-                    <input type="text" id="studentemail" class="w-full border-2 border-gery py-2 px-4" v-model.trim="formData.email" placeholder="Write your email" required>
+                    <input type="text" id="studentemail" class="w-full border-2 border-gery py-2 px-4" v-model.trim="studentData.email" placeholder="Write your email" required>
                 </div>
             </div>
             <div class="m-8 flex justify-center">
